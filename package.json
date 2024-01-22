@@ -1,0 +1,26 @@
+{
+  "name": "playwright-cucumber-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.40.1",
+    "@types/node": "^20.10.6",
+    "playwright-bdd": "^5.6.0",
+    "ts-node": "10.9.1",
+    "dotenv": "^16.3.1"
+  },
+  "dependencies": {
+    "@cucumber/cucumber": "10.0.1",
+    "@cucumber/html-formatter": "21.0.0",
+    "@cucumber/messages": "^24.0.0",
+    "@cucumber/pretty-formatter": "1.0.0",
+    "@types/fs-extra": "11.0.4",
+    "cucumber-console-formatter": "1.0.0",
+    "cucumber-html-reporter": "7.1.1"
+  }
+}
