@@ -1,11 +1,11 @@
 import { defineConfig, devices } from "@playwright/test";
-import { defineBddConfig } from "playwright-bdd";
+import { defineBddConfig, cucumberReporter } from "playwright-bdd"
 
 const testDir = defineBddConfig({
   paths: ["./features"],
   require: ["./src/steps/*.steps.ts"],
-  featuresRoot: "./features",
-});
+  featuresRoot: "./features"
+})
 
 /**
  * Read environment variables from file.
@@ -23,8 +23,8 @@ export default defineConfig({
 
     toHaveScreenshot: {
       // An acceptable amount of pixels that could be different, unset by default.
-      maxDiffPixels: 10,
-    },
+      maxDiffPixels: 10
+    }
   },
   testDir,
   /* Run tests in files in parallel */
@@ -36,22 +36,24 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: "html",
+  reporter: [
+    cucumberReporter("html", { outputFile: "cucumber-report/report.html" })
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://127.0.0.1:3000',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: "on-first-retry",
+    trace: "on-first-retry"
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
-    },
+      use: { ...devices["Desktop Chrome"] }
+    }
 
     /* Test against mobile viewports. */
     // {
@@ -72,7 +74,7 @@ export default defineConfig({
     //   name: 'Google Chrome',
     //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
     // },
-  ],
+  ]
 
   /* Run your local dev server before starting the tests */
   // webServer: {
@@ -80,4 +82,4 @@ export default defineConfig({
   //   url: 'http://127.0.0.1:3000',
   //   reuseExistingServer: !process.env.CI,
   // },
-});
+})
