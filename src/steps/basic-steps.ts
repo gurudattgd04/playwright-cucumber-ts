@@ -1,18 +1,6 @@
-import { Page, expect } from "@playwright/test"
+import { expect } from "@playwright/test"
 import { createBdd } from "playwright-bdd"
 import { config } from "../support/config"
-import {
-  chromium,
-  ChromiumBrowser,
-  firefox,
-  FirefoxBrowser,
-  webkit,
-  WebKitBrowser,
-  ConsoleMessage,
-  request,
-  BrowserContext,
-  defineConfig
-} from "@playwright/test"
 import { DataTable } from "@cucumber/cucumber"
 
 const { Given, When, Then, Before, After } = createBdd()
@@ -85,7 +73,6 @@ Then("I should see product details", async function(
           `//li/span[contains(@class, 'ls-label') and contains(text(), '${key}')]/following-sibling::*[1]`
         )
         .innerText()
-      console.log("value is: ", value)
       await expect(value).toBe(await dataTable.rowsHash()[key])
     })
   )

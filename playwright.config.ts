@@ -3,19 +3,10 @@ import { defineBddConfig, cucumberReporter } from "playwright-bdd"
 
 const testDir = defineBddConfig({
   paths: ["./features"],
-  require: ["./src/steps/*.steps.ts"],
+  require: ["./src/steps/*-steps.ts"],
   featuresRoot: "./features"
 })
 
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// require('dotenv').config();
-
-/**
- * See https://playwright.dev/docs/test-configuration.
- */
 export default defineConfig({
   expect: {
     // Maximum time expect() should wait for the condition to be met.
@@ -34,7 +25,7 @@ export default defineConfig({
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  workers: process.env.CI ? 2 : 2,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     cucumberReporter("html", { outputFile: "cucumber-report/report.html" })

@@ -1,33 +1,38 @@
-import { Page, expect } from "@playwright/test"
+import { Page } from "@playwright/test"
 import { createBdd } from "playwright-bdd"
-const playwright = require("playwright")
-import { config } from "../support/config"
+import { DataTable } from "@cucumber/cucumber"
 import {
   chromium,
   ChromiumBrowser,
-  firefox,
   FirefoxBrowser,
-  webkit,
   WebKitBrowser,
-  ConsoleMessage,
-  request,
-  BrowserContext,
-  defineConfig
+  BrowserContext
 } from "@playwright/test"
 
-let tracesDir = "traces"
 let browser: ChromiumBrowser | FirefoxBrowser | WebKitBrowser
 let page: Page
 let context: BrowserContext
-const { Given, When, Then, Before, After } = createBdd()
+const { Before, After } = createBdd()
 
 Before(async function() {
-  defineConfig({
-    expect: {
-      timeout: 2000
+  const capabilities = {
+    'browserName': 'Chrome', // Browsers allowed: `Chrome`, `MicrosoftEdge`, `pw-chromium`, `pw-firefox` and `pw-webkit`
+    'browserVersion': 'latest',
+    'LT:Options': {
+      'platform': 'Windows 10',
+      'build': 'Playwright Sample Build GD',
+      'name': 'Playwright Sample Test GD',
+      'user': process.env.LT_USERNAME,
+      'accessKey': process.env.LT_ACCESS_KEY,
+      'network': true,
+      'video': true,
+      'console': true
     }
+  }
+
+   const browser = await chromium.connect({
+    wsEndpoint: `wss://cdp.lambdatest.com/playwright?capabilities=${encodeURIComponent(JSON.stringify(capabilities))}`
   })
-  browser = await chromium.launch(config.browserOptions)
   context = await browser.newContext({
     acceptDownloads: true,
     recordVideo: process.env.PWVIDEO ? { dir: "screenshots" } : undefined,

@@ -10,10 +10,11 @@ Feature: Lambdatest playground website automation
             | asdas@asdas.com | Test1234! |
             | assa@as.com     | Test1234! |
 
-    # Data Tabel example
+# Data Table example
     Scenario: Validate product details
         When I access HTC product
         Then I should see product details
+
             | Brand         | HTC |
             | Reward Points | 400 |
 
